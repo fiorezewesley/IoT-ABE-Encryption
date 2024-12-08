@@ -1,4 +1,21 @@
-Charm
+# IoT-ABE-Encryption
+
+Este projeto implementa um sistema de criptografia baseada em atributos (Attribute-Based Encryption - ABE) para proteger dados de dispositivos IoT. Ele utiliza a biblioteca [Charm-Crypto](https://github.com/JHUISI/charm) para operações matemáticas avançadas e experimentos com emparelhamentos bilineares.
+
+## Objetivo do Projeto
+
+- Proteger dados de sensores IoT por meio de criptografia com controle de acesso baseado em políticas.
+- Explorar o uso da biblioteca Charm-Crypto no contexto acadêmico e prático.
+- Demonstrar como a criptografia baseada em atributos pode ser aplicada para IoT.
+
+## Estrutura do Repositório
+
+- **Implementações do Projeto**: Contém scripts específicos para geração de chaves, criptografia e descriptografia baseadas em atributos.
+- **Charm-Crypto**: Inclui o código-fonte da biblioteca utilizada como base.
+
+---
+
+# Charm
 =====
 
 | Branch      | Status                                                                                                          |
