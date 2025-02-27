@@ -4,19 +4,19 @@ from charm.toolbox.pairinggroup import PairingGroup, G1
 from charm.schemes.abenc.abenc_waters09 import CPabe09
 import base64
 
-# Configuração da biblioteca Charm-Crypto
+
 groupObj = PairingGroup('SS512')
 abe = CPabe09(groupObj)
 
-# Geração de chaves (para fins de teste)
+
 master_secret_key, public_key = abe.setup()
 
-# Configuração do broker MQTT
+#broker
 BROKER = "localhost"
 PORT = 1883
 TOPIC = "iot/sensor_data"
 
-# Função para desserializar componentes
+#desserializar 
 def deserialize_component(value):
     """Desserializa elementos reconhecidos pelo Charm-Crypto."""
     try:
@@ -31,7 +31,7 @@ def deserialize_component(value):
     except Exception as e:
         return value
 
-# Função para reconstruir a chave pública
+# necessario para reconstruir a chave publica
 def reconstruct_public_key(serialized_public_key):
     """Reconstrói a chave pública a partir do dicionário serializado."""
     return {k: deserialize_component(v) for k, v in serialized_public_key.items()}
@@ -48,19 +48,19 @@ def on_message(client, userdata, msg):
     # Reconstruir a chave pública
     public_key = reconstruct_public_key(serialized_public_key)
     
-    # Recriar o ciphertext
+    # msma coisa p recriar o ciphertext
     ciphertext = {k: deserialize_component(v) for k, v in serialized_ciphertext.items()}
     
-    # Gerar chave secreta
+    # gerando privatekey
     attributes = sorted(["111", "333"])  # Atributos autorizados como lista ordenada
     secret_key = abe.keygen(public_key, master_secret_key, attributes)
     
-    # Descriptografar os dados
+    # Descriptografar 
     ciphertext["policy"] = policy  # Adiciona a política como string no ciphertext
     M_gt = abe.decrypt(public_key, secret_key, ciphertext)
     print(f"Dados descriptografados: {M_gt}")
 
-# Configuração do cliente MQTT
+# mqtt simples
 client = mqtt.Client()
 client.on_message = on_message
 client.connect(BROKER, PORT, 60)

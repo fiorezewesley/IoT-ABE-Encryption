@@ -13,10 +13,9 @@ BROKER = "localhost"
 PORT = 1883
 TOPIC = "iot/sensor_data"
 
-# Geração de chaves
 master_secret_key, public_key = abe.setup()
 
-# Dados do sensor e política de acesso
+# dados aleaitórioss e política
 sensor_data = {
     "temperature": "25.5°C",
     "humidity": "60%",
@@ -24,13 +23,13 @@ sensor_data = {
 }
 policy = "((111 AND 333) OR (111 AND 444))"
 
-# Preparação dos dados para criptografia
+
 print("IoT Device: Criptografando os dados...")
 sensor_data_str = json.dumps(sensor_data)
 M_g1 = groupObj.hash(sensor_data_str, G1)
 M_gt = groupObj.pair_prod(M_g1, M_g1)
 
-# Criptografar os dados
+
 ciphertext = abe.encrypt(public_key, M_gt, policy)
 
 # Serializar os componentes do ciphertext
